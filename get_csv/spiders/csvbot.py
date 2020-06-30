@@ -16,7 +16,7 @@ class CsvbotSpider(scrapy.Spider):
                '''
 
     def start_requests(self):
-        df = pd.read_csv('scraped_file.csv')
+        df = pd.read_csv('adi_links.csv')
         list = df.link.to_list()
         start_urls = list
         for i in range(0, len(start_urls)):
