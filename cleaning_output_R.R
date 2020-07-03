@@ -1,0 +1,18 @@
+library(tidyverse)
+falta_raspar <- adi_lista %>% anti_join(adi_combined, by = "nome")
+falta_raspar2 <- adis_lista_manual %>% anti_join(adi_combined, by = "nome")
+nome1 <- falta_raspar %>% select(nome)
+raspar <- nome1 %>% rbind(falta_raspar2)
+write.csv(raspar, 'raspar.csv', row.names = F)
+adis_lista_manual$lista = TRUE
+write.csv(adis_lista_manual, 'adis_lista_manual.csv', row.names = F)
+adi_lista <- adi_lista %>% select(nome, lista)
+juntada <- adi_combined %>% left_join(adi_lista, by = ("nome" = "nome"))
+juntada2 <- juntada %>% left_join(adis_lista_manual, by = ("nome" = "nome"))
+raspar2 <- unique(raspar)
+raspar2$lista = TRUE
+write.csv(raspar2, 'raspar2.csv', row.names = F)
+all_lista <- adi_lista %>%rbind(adis_lista_manual)
+all_lista <- unique(all_lista)
+combinada <- adi_combined %>% left_join(all_lista, by = ("nome" = "nome"))
+write.csv(combinada, 'combinada.csv', row.names = F)
